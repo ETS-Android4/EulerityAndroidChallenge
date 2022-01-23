@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/baseline_file_upload_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/brush.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/camera.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/close.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/eraser.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/filter.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/gallery.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/insert_emoji.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/oval.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/rectangle.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/redo.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/rounded_border_text_view.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/save.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/share.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/sticker.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/text.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/undo.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/drawable/upload.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/activity_edit_image.xml" value="0.2359375" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/add_text_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/fragment_image_inspect.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/recycler_adapter.xml" value="0.2" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/row_editing_tools.xml" value="0.25" />
+        <entry key="..\:/Users/vikra/AndroidStudioProjects/EulerityAndroidChallenge/app/src/main/res/layout/row_filter_view.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
