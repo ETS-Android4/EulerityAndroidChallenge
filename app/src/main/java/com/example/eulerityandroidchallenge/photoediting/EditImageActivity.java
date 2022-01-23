@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -151,7 +152,8 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
             styleBuilder.withTextColor(newColorCode);
 
             mPhotoEditor.editText(rootView, inputText, styleBuilder);
-            binding.txtCurrentTool.setText(R.string.label_text);
+            mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_text));
+            mEditingToolsAdapter.notifyDataSetChanged();
         });
     }
 
@@ -242,7 +244,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     }
 
     private void saveImage () {
-        final String fileName = System.currentTimeMillis() + ".png";
+        final String fileName = System.currentTimeMillis() + ".jpeg";
         final boolean hasStoragePermission =
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
         if (hasStoragePermission || isSdkHigherThan28()) {
@@ -284,19 +286,16 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     @Override
     public void onColorChanged (int colorCode) {
         mPhotoEditor.setShape(mShapeBuilder.withShapeColor(colorCode));
-        binding.txtCurrentTool.setText(R.string.label_brush);
     }
 
     @Override
     public void onOpacityChanged (int opacity) {
         mPhotoEditor.setShape(mShapeBuilder.withShapeOpacity(opacity));
-        binding.txtCurrentTool.setText(R.string.label_brush);
     }
 
     @Override
     public void onShapeSizeChanged (int shapeSize) {
         mPhotoEditor.setShape(mShapeBuilder.withShapeSize(shapeSize));
-        binding.txtCurrentTool.setText(R.string.label_brush);
     }
 
     @Override
@@ -307,13 +306,15 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     @Override
     public void onEmojiClick (String emojiUnicode) {
         mPhotoEditor.addEmoji(emojiUnicode);
-        binding.txtCurrentTool.setText(R.string.label_emoji);
+        mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_emoji));
+        mEditingToolsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onStickerClick (Bitmap bitmap) {
         mPhotoEditor.addImage(bitmap);
-        binding.txtCurrentTool.setText(R.string.label_sticker);
+        mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_sticker));
+        mEditingToolsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -344,12 +345,13 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
     @Override
     public void onToolSelected (ToolType toolType) {
+
         switch (toolType) {
             case SHAPE:
                 mPhotoEditor.setBrushDrawingMode(true);
                 mShapeBuilder = new ShapeBuilder();
                 mPhotoEditor.setShape(mShapeBuilder);
-                binding.txtCurrentTool.setText(R.string.label_shape);
+                mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_shape));
                 showBottomSheetDialogFragment(mShapeBSFragment);
                 break;
             case TEXT:
@@ -359,15 +361,16 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                     styleBuilder.withTextColor(colorCode);
 
                     mPhotoEditor.addText(inputText, styleBuilder);
-                    binding.txtCurrentTool.setText(R.string.label_text);
+                    mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_text));
+                    mEditingToolsAdapter.notifyDataSetChanged();
                 });
                 break;
             case ERASER:
                 mPhotoEditor.brushEraser();
-                binding.txtCurrentTool.setText(R.string.label_eraser_mode);
+                mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_eraser));
                 break;
             case FILTER:
-                binding.txtCurrentTool.setText(R.string.label_filter);
+                mEditingToolsAdapter.setHighlightedTool(getResources().getString(R.string.label_filter));
                 showFilter(true);
                 break;
             case EMOJI:
@@ -377,6 +380,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                 showBottomSheetDialogFragment(mStickerBSFragment);
                 break;
         }
+        mEditingToolsAdapter.notifyDataSetChanged();
     }
 
     private void showBottomSheetDialogFragment (BottomSheetDialogFragment fragment) {
@@ -415,7 +419,8 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     public void onBackPressed () {
         if (mIsFilterVisible) {
             showFilter(false);
-            binding.txtCurrentTool.setText(R.string.app_name);
+            mEditingToolsAdapter.setHighlightedTool("");
+            mEditingToolsAdapter.notifyDataSetChanged();
         }
         else if (!mPhotoEditor.isCacheEmpty()) {
             showSaveDialog();

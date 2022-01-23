@@ -15,12 +15,11 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
- * Created by Burhanuddin Rashid on 1/17/2018.
+ * A base class with some helper methods for EditImageActivity
  */
 
 public class BaseActivity extends AppCompatActivity {
 
-    public static final int READ_WRITE_STORAGE = 52;
     private ProgressDialog mProgressDialog;
 
 

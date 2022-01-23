@@ -7,7 +7,7 @@
     <string name="app_id">vikrant.pulipati@gmail.com</string>
 
     <string name="label_brush">Brush</string>
-    <string name="label_shape">Shape</string>
+    <string name="label_shape">Draw</string>
     <string name="label_oval">Oval</string>
     <string name="label_rectangle">Rectangle</string>
     <string name="label_line">Line</string>

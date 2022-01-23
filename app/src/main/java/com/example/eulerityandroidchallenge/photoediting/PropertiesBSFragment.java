@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import com.example.eulerityandroidchallenge.R;
 
+/**
+ *      Fragment which displays the options to modify the Draw tool
+ */
+
 public class PropertiesBSFragment extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
 
     public PropertiesBSFragment() {

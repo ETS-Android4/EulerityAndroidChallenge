@@ -21,6 +21,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import com.example.eulerityandroidchallenge.R;
 
+/**
+ *      Fragment to display available emojis in EditImageActivity
+ */
+
 public class EmojiBSFragment extends BottomSheetDialogFragment {
 
     public EmojiBSFragment() {

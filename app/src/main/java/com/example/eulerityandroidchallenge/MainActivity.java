@@ -5,16 +5,17 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.eulerityandroidchallenge.adapters.MainAdapter;
 import com.example.eulerityandroidchallenge.databinding.ActivityMainBinding;
-import com.example.eulerityandroidchallenge.models.ImageObject;
 import com.example.eulerityandroidchallenge.viewmodels.MainActivityViewModel;
 
-import java.util.List;
+/**
+ *      The starting screen of the app
+ *          - Displays images retrieved from MainActivityViewModel in a RecyclerView
+ */
 
 public class MainActivity extends AppCompatActivity {
 

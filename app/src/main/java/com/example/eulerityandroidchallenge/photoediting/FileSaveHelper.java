@@ -20,16 +20,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * General contract of this class is to
- * create a file on a device.
- * </br>
- * How to Use it-
- * Call {@linkplain FileSaveHelper#createFile(String, OnFileCreateResult)}
- * if file is created you would receive it's file path and Uri
- * and after you are done with File call {@linkplain FileSaveHelper#notifyThatFileIsNowPubliclyAvailable(ContentResolver)}
- * </br>
- * Remember! in order to shutdown executor call {@linkplain FileSaveHelper#addObserver(LifecycleOwner)} or
- * create object with the {@linkplain FileSaveHelper#FileSaveHelper(AppCompatActivity)}
+ *      Helper class which creates files on the device
+ *      How to Use it-
+ *          1. Call {@linkplain FileSaveHelper#createFile(String, OnFileCreateResult)}
+ *          2. If file is created you, would receive it's file path and Uri
+ *          3. After you are done with File, call {@linkplain FileSaveHelper#notifyThatFileIsNowPubliclyAvailable(ContentResolver)}
+ *          4. Remember! in order to shutdown executor call {@linkplain FileSaveHelper#addObserver(LifecycleOwner)} or
+ *      Create object with the {@linkplain FileSaveHelper#FileSaveHelper(AppCompatActivity)}
  */
 public class FileSaveHelper implements LifecycleObserver {
     private final ContentResolver mContentResolver;
@@ -69,11 +66,8 @@ public class FileSaveHelper implements LifecycleObserver {
 
     /**
      * The effects of this method are
-     * 1- insert new Image File data in MediaStore.Images column
-     * 2- create File on Disk.
-     *
-     * @param fileNameToSave fileName
-     * @param listener       result listener
+     *      1. insert new Image File data in MediaStore.Images column
+     *      2- create File on Disk.
      */
 
     public void createFile(final String fileNameToSave, OnFileCreateResult listener) {
