@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.example.eulerityandroidchallenge.R;
 
 /**
- * Created by Burhanuddin Rashid on 1/16/2018.
+ *      A fragment containing a field for users to enter text to overlay on the image
  */
 
 public class TextEditorDialogFragment extends DialogFragment {

@@ -18,6 +18,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import ja.burhanrashid52.photoeditor.shape.ShapeType;
 import com.example.eulerityandroidchallenge.R;
 
+/**
+ *      A fragment which allow the user to select and modify shapes
+ */
+
 public class ShapeBSFragment extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
 
     public ShapeBSFragment() {

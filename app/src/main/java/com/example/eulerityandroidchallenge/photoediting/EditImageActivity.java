@@ -1,13 +1,11 @@
 package com.example.eulerityandroidchallenge.photoediting;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static com.example.eulerityandroidchallenge.photoediting.FileSaveHelper.isSdkHigherThan28;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,11 +14,7 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -42,11 +36,12 @@ import com.example.eulerityandroidchallenge.viewmodels.UploadStatus;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoFilter;
-import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.TextStyleBuilder;
 import ja.burhanrashid52.photoeditor.ViewType;
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder;
@@ -76,7 +71,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     private ShapeBuilder mShapeBuilder;
     private EmojiBSFragment mEmojiBSFragment;
     private StickerBSFragment mStickerBSFragment;
-    private final EditingToolsAdapter mEditingToolsAdapter = new EditingToolsAdapter(this);
+    private final EditingToolsAdapter mEditingToolsAdapter = new EditingToolsAdapter(this, this);
     private final FilterViewAdapter mFilterViewAdapter = new FilterViewAdapter(this);
     private final ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
@@ -84,12 +79,6 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     ImageObject imageObject;
 
     UploadStatus status;
-
-    @Nullable
-    @VisibleForTesting
-    Uri mSaveImageUri;
-
-    private FileSaveHelper mSaveFileHelper;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -126,7 +115,6 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
         mPhotoEditor.setOnPhotoEditorListener(this);
 
-        mSaveFileHelper = new FileSaveHelper(this);
     }
 
     private void handleIntentImage (ImageView source) {
@@ -206,29 +194,22 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         }
     }
 
-    //These two methods display Toasts according to the status of the image upload
-    public void toastSuccess () {
-        Toast.makeText(EditImageActivity.this, getResources().getString(R.string.toast_upload_success), Toast.LENGTH_LONG).show();
-    }
-
-    public void toastProgress () {
-        Toast.makeText(EditImageActivity.this, getResources().getString(R.string.toast_upload_progress), Toast.LENGTH_SHORT).show();
-    }
-
     //This method executes when the user hits the upload button, checking permissions before calling UploadStatus to upload the image
+    //Converts the contents of the PhotoEditor into a Bitmap and sends it to UploadStatus
     private void uploadImage () {
         final boolean hasStoragePermission =
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
-        toastProgress();
-        if (hasStoragePermission || isSdkHigherThan28()) {
+        if (hasStoragePermission) {
+            showSnackbar(getResources().getString(R.string.upload_progress_message));
             mPhotoEditor.saveAsBitmap(new OnSaveBitmap() {
                 @Override
                 public void onBitmapReady(Bitmap saveBitmap) {
                     status = new ViewModelProvider(EditImageActivity.this).get(UploadStatus.class);
+                    binding.photoEditorView.getSource().setImageBitmap(saveBitmap);
                     status.init(imageObject, saveBitmap);
                     status.getUploadStatus().observe(EditImageActivity.this, aBoolean -> {
                         if (aBoolean) {
-                            toastSuccess();
+                            showSnackbar(getResources().getString(R.string.upload_success_message));
                         }
                     });
                 }
@@ -243,39 +224,23 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         }
     }
 
+    //Converts the contents of the PhotoEditor as a Bitmap before saving it as a File in storage
     private void saveImage () {
         final String fileName = System.currentTimeMillis() + ".jpeg";
         final boolean hasStoragePermission =
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
-        if (hasStoragePermission || isSdkHigherThan28()) {
-            showLoading("Saving...");
-            mSaveFileHelper.createFile(fileName, (fileCreated, filePath, error, uri) -> {
-                if (fileCreated) {
-                    SaveSettings saveSettings = new SaveSettings.Builder()
-                            .setClearViewsEnabled(true)
-                            .setTransparencyEnabled(true)
-                            .build();
+        if (hasStoragePermission) {
+            mPhotoEditor.saveAsBitmap(new OnSaveBitmap() {
+                @Override
+                public void onBitmapReady(Bitmap saveBitmap) {
+                    File file = App.bitmapToFile(saveBitmap, fileName);
+                    Picasso.get().load(file).into(binding.photoEditorView.getSource());
+                    showSnackbar(getResources().getString(R.string.save_success_message));
+                }
 
-                    mPhotoEditor.saveAsFile(filePath, saveSettings, new PhotoEditor.OnSaveListener() {
-                        @Override
-                        public void onSuccess(@NonNull String imagePath) {
-                            mSaveFileHelper.notifyThatFileIsNowPubliclyAvailable(getContentResolver());
-                            hideLoading();
-                            showSnackbar("Image Saved Successfully");
-                            mSaveImageUri = uri;
-                            binding.photoEditorView.getSource().setImageURI(mSaveImageUri);
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            hideLoading();
-                            showSnackbar("Failed to save Image");
-                        }
-                    });
-
-                } else {
-                    hideLoading();
-                    showSnackbar(error);
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(EditImageActivity.this, "Failed to generate bitmap!", Toast.LENGTH_LONG).show();
                 }
             });
         } else {

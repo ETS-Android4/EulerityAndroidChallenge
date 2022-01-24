@@ -1,6 +1,5 @@
 package com.example.eulerityandroidchallenge.photoediting.base;
 
-import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.view.View;
 import android.view.Window;
@@ -19,9 +18,6 @@ import com.google.android.material.snackbar.Snackbar;
  */
 
 public class BaseActivity extends AppCompatActivity {
-
-    private ProgressDialog mProgressDialog;
-
 
     public void requestPermission(String permission, int requestCode) {
         boolean isGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
@@ -46,20 +42,6 @@ public class BaseActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         isPermissionGranted(grantResults[0] == PackageManager.PERMISSION_GRANTED, permissions[0], requestCode);
-    }
-
-    protected void showLoading(@NonNull String message) {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(message);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-    }
-
-    protected void hideLoading() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
     }
 
     protected void showSnackbar(@NonNull String message) {

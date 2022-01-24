@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/imgClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/top_tool_icon_width"
+            android:layout_height="@dimen/top_tool_icon_width"
             android:src="@drawable/close"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,23 +26,25 @@
 
         <ImageView
             android:id="@+id/imgSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/top_tool_icon_width"
+            android:layout_height="@dimen/top_tool_icon_width"
             android:src="@drawable/save"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/save" />
 
         <ImageView
             android:id="@+id/imgUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/top_tool_icon_width"
+            android:layout_height="@dimen/top_tool_icon_width"
             android:src="@drawable/upload"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toStartOf="@+id/imgSave"
+            app:layout_constraintHorizontal_bias="0.941"
+            app:layout_constraintStart_toEndOf="@+id/imgRedo"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/upload" />
 
@@ -75,7 +77,7 @@
             android:src="@drawable/undo"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.119"
+            app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

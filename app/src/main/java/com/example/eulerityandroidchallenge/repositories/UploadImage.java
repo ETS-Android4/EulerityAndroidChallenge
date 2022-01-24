@@ -1,7 +1,6 @@
 package com.example.eulerityandroidchallenge.repositories;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,9 +8,7 @@ import com.example.eulerityandroidchallenge.App;
 import com.example.eulerityandroidchallenge.R;
 import com.example.eulerityandroidchallenge.models.ImageObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,29 +40,6 @@ public class UploadImage {
         return instance;
     }
 
-    //Converts bitmaps to JPEG files
-    private static File bitmapToFile (Bitmap bitmap, String fileNameToSave) {
-        File file = null;
-        try {
-            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
-            file.createNewFile();
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-            return file;
-        }catch (Exception e){
-            e.printStackTrace();
-            return file; //returns null
-        }
-    }
-
-
     //Implements UploadService to upload the image
     private void upload (ImageObject obj, Bitmap bitmap) {
         String url = getUploadURL();
@@ -78,7 +52,7 @@ public class UploadImage {
 
         String[] originalUrl = obj.getUrl().split("/");
         String fileName = originalUrl[originalUrl.length-1];
-        File f = bitmapToFile(bitmap, fileName);
+        File f = App.bitmapToFile(bitmap, "tmp.jpeg");
         RequestBody imageFile = RequestBody.create(MediaType.parse("multipart/form-data"), f);
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, imageFile);
 
@@ -88,6 +62,7 @@ public class UploadImage {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     data.postValue(true);
+                    f.delete();
                 }
             }
 

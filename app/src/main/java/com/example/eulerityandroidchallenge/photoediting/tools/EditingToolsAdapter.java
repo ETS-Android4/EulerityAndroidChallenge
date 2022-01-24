@@ -1,5 +1,6 @@
 package com.example.eulerityandroidchallenge.photoediting.tools;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,24 +23,21 @@ import java.util.List;
  */
 public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapter.ViewHolder> {
 
-    public String getHighlightedTool() {
-        return highlightedTool;
-    }
-
-    public void setHighlightedTool(String highlightedTool) {
-        this.highlightedTool = highlightedTool;
-    }
+    Context parentContext;
 
     private String highlightedTool = "";
 
     private final List<ToolModel> mToolList = new ArrayList<>();
     private final OnItemSelected mOnItemSelected;
 
+    public void setHighlightedTool(String highlightedTool) {
+        this.highlightedTool = highlightedTool;
+    }
 
-
-    public EditingToolsAdapter(OnItemSelected onItemSelected) {
+    public EditingToolsAdapter(OnItemSelected onItemSelected, Context context) {
+        parentContext = context;
         mOnItemSelected = onItemSelected;
-        mToolList.add(new ToolModel("Draw", R.drawable.oval, ToolType.SHAPE));
+        mToolList.add(new ToolModel("Draw", R.drawable.draw, ToolType.SHAPE));
         mToolList.add(new ToolModel("Text", R.drawable.text, ToolType.TEXT));
         mToolList.add(new ToolModel("Eraser", R.drawable.eraser, ToolType.ERASER));
         mToolList.add(new ToolModel("Filter", R.drawable.filter, ToolType.FILTER));
@@ -77,10 +75,10 @@ public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapte
         ToolModel item = mToolList.get(position);
         holder.txtTool.setText(item.mToolName);
         holder.imgToolIcon.setImageResource(item.mToolIcon);
-        holder.imgToolIcon.clearColorFilter();
+        holder.imgToolIcon.getDrawable().setTint(parentContext.getResources().getColor(R.color.white));
 
         if (item.mToolName.equals(highlightedTool)) {
-            holder.imgToolIcon.setColorFilter(R.color.gold_highlight, PorterDuff.Mode.SRC_ATOP);
+            holder.imgToolIcon.getDrawable().setTint(parentContext.getResources().getColor(R.color.gold_highlight));
         }
     }
 

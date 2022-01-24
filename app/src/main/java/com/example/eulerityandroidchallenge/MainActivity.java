@@ -2,6 +2,7 @@ package com.example.eulerityandroidchallenge;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -33,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         viewModel.init();
-        viewModel.getImageObjects().observe(this, imageObjects -> adapter.notifyDataSetChanged());
+        viewModel.getImageObjects().observe(this, imageObjects -> {
+            adapter.notifyDataSetChanged();
+            if (adapter.getItemCount() > 0) {
+                binding.progressBar.setVisibility(View.GONE);
+            }
+        });
 
         initRecyclerView();
     }

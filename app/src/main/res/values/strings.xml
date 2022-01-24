@@ -23,12 +23,13 @@
     <string name="msg_save_image_to_share">Please save image to share</string>
     <string name="msg_share_image">Share Image</string>
 
-    <string name="toast_upload_success">Upload successful!</string>
-    <string name="toast_upload_progress">Upload in progress…</string>
-
     <string name="edit_image_save">Save</string>
     <string name="edit_image_cancel">Cancel</string>
     <string name="edit_image_discard">Discard</string>
+
+    <string name="save_success_message">Image Saved Successfully</string>
+    <string name="upload_success_message">Image Uploaded Successfully</string>
+    <string name="upload_progress_message">Uploading Image…</string>
 
     <string-array name="photo_editor_emoji">
 

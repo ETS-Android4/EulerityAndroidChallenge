@@ -18,6 +18,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.example.eulerityandroidchallenge.R;
 
+/**
+ *      A fragment which allows users to select stickers
+ */
+
 public class StickerBSFragment extends BottomSheetDialogFragment {
 
     public StickerBSFragment() {
